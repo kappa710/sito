@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Subnetting CHEATSHEETS | Cyber Noob</title>
+<meta name="keywords" content="">
+<meta name="description" content="come diventare  Pro con  subnetting">
+<meta name="author" content="">
+<link rel="canonical" href="https://example.org/posts/esercizi-subnetting/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.6da9a63d25a9608bca2f7f907a030e887a7dd3c3f3918e4cc113129361414bda.css" integrity="sha256-bammPSWpYIvKL3&#43;QegMOiHp908PzkY5MwRMSk2FBS9o=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://example.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://example.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://example.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://example.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://example.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://example.org/posts/esercizi-subnetting/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://example.org/posts/esercizi-subnetting/">
+  <meta property="og:site_name" content="Cyber Noob">
+  <meta property="og:title" content="Subnetting CHEATSHEETS">
+  <meta property="og:description" content="come diventare  Pro con  subnetting">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Subnetting CHEATSHEETS">
+<meta name="twitter:description" content="come diventare  Pro con  subnetting">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://example.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Subnetting CHEATSHEETS",
+      "item": "https://example.org/posts/esercizi-subnetting/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Subnetting CHEATSHEETS",
+  "name": "Subnetting CHEATSHEETS",
+  "description": "come diventare  Pro con  subnetting",
+  "keywords": [
+    
+  ],
+  "articleBody": "Regola Fondamentale Subnetting fa una sorta di linea di separazione 1 per Bit per rete , 0 bit per Hosts\npassare da CIDR -\u003e SUBNETMASKING trovare bit dedicati a rete : CIDR - (primo multiplo di 8 piu piccolo del CIDR)\nvalore ultimo ottetto subnetmask è equivalente a seguente schema\n7 =254, 6 =252, 5 =248, 4 =240, 3 =224, 2 =192, 1 =128, esempio 192.168.19.2/25\n24 è il multipliplo piu piccolo del CIDR\n25-24 = 1 ultimo numero subnet 128\nrange SUBNET MASK 256 - ultimo numero diverso da 0 nella subnetmask\nesempio 255.255.128.0 256-128=128\npassare da SUBNET MASK -\u003e CIDR ottenere numero range: 256 - ultimo numero diverso da 0 nella subnetmask\ntrovare bit dedicati a rete: numero tale che 2^numero = range\nCIDR:8 * numero ottetti uguali a 255 + numero ottenuto\nesempio 255.255.240.0\n256 - 250 (ultimo numero diverso da 0 nella subnetmask)\n=16 che è 2 alla 4\n4 + 8 * 2 (ci sono 2 255 nella subnetmask)\nrange CIDR 2 elevato a (numero multiplo di 8 maggiore del CIDR - numero CIDR )\nesempio /22\n24 ( è multiplo di 8 maggiore del CIDR ) - 22 = 2\n2 alla 2 = 4\nnumero di host da CIDR 2 elevato alla (32-numero CIDR)\nnumero network ( ricorda che primo e ultimo host non si possono usare) vedere range\nmoltiplicare numero host per numero affinche arrivo a range (parte da numero fino numero host * multiplo +1)\nesempio 48.25.24.71/21\n24-21=3 -\u003e 2^3\nle subnet vanno di 8 in 8 partendo da 0 nel terzo ottetto\ndobbiamo raggiungere 24 è fortunatamente 24 è multiplo di 8\n48.25.24.0 è network , 48.25.31.255 è broadcast ( prossimo network parte dal prossimo multiplo di 8 32)\nnumero sottereti 2 elevato alla ( numero CIDR - numero minore al CIDR multiplo di 8 )\nesempio /23 2 elevato a (23 -16)\n",
+  "wordCount" : "313",
+  "inLanguage": "en",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://example.org/posts/esercizi-subnetting/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Cyber Noob",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://example.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://example.org/" accesskey="h" title="Cyber Noob (Alt + H)">Cyber Noob</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://example.org/archives/" title="Archivio">
+                    <span>Archivio</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://example.org/archives" title="archivio">
+                    <span>archivio</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://example.org/categories/" title="categorie">
+                    <span>categorie</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://example.org/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Subnetting CHEATSHEETS
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="regola-fondamentale">Regola Fondamentale<a hidden class="anchor" aria-hidden="true" href="#regola-fondamentale">#</a></h2>
+<blockquote>
+<p>Subnetting fa una  sorta di  linea di separazione 1 per  Bit per rete , 0 bit per Hosts</p></blockquote>
+<hr>
+<h3 id="passare-da-cidr---subnetmasking">passare da CIDR -&gt; SUBNETMASKING<a hidden class="anchor" aria-hidden="true" href="#passare-da-cidr---subnetmasking">#</a></h3>
+<ol>
+<li>
+<p><strong>trovare bit dedicati a rete</strong> : <code>CIDR - (primo multiplo di 8 piu piccolo del CIDR)</code></p>
+</li>
+<li>
+<p>valore ultimo ottetto subnetmask è <strong>equivalente a seguente schema</strong></p>
+</li>
+</ol>
+<ul>
+<li>7 =254,</li>
+<li>6 =252,</li>
+<li>5 =248,</li>
+<li>4 =240,</li>
+<li>3 =224,</li>
+<li>2 =192,</li>
+<li>1 =128,</li>
+</ul>
+<h4 id="esempio">esempio<a hidden class="anchor" aria-hidden="true" href="#esempio">#</a></h4>
+<p>192.168.19.2/25</p>
+<p>24 è il multipliplo piu piccolo del CIDR</p>
+<p>25-24 = 1      ultimo numero subnet 128</p>
+<h3 id="range-subnet-mask">range SUBNET MASK<a hidden class="anchor" aria-hidden="true" href="#range-subnet-mask">#</a></h3>
+<p><code>256 - ultimo numero diverso da 0 nella subnetmask</code></p>
+<h4 id="esempio-1">esempio<a hidden class="anchor" aria-hidden="true" href="#esempio-1">#</a></h4>
+<p>255.255.128.0
+256-128=128</p>
+<h3 id="passare-da-subnet-mask---cidr">passare da SUBNET MASK -&gt; CIDR<a hidden class="anchor" aria-hidden="true" href="#passare-da-subnet-mask---cidr">#</a></h3>
+<ol>
+<li>
+<p><strong>ottenere numero range</strong>:  <code>256 - ultimo numero diverso da 0 nella subnetmask</code></p>
+</li>
+<li>
+<p><strong>trovare bit dedicati a rete</strong>: <code>numero tale che 2^numero =  range</code></p>
+</li>
+<li>
+<p><strong>CIDR</strong>:<code>8 *  numero ottetti uguali a 255 + numero ottenuto</code></p>
+</li>
+</ol>
+<h4 id="esempio-2">esempio<a hidden class="anchor" aria-hidden="true" href="#esempio-2">#</a></h4>
+<p>255.255.240.0</p>
+<p>256 - 250 (ultimo numero diverso da 0 nella subnetmask)</p>
+<p>=16 che è 2 alla 4</p>
+<p>4 + 8 * 2 (ci sono 2 255 nella subnetmask)</p>
+<hr>
+<h3 id="range-cidr">range CIDR<a hidden class="anchor" aria-hidden="true" href="#range-cidr">#</a></h3>
+<p><code>2 elevato a (numero multiplo di 8 maggiore del CIDR - numero CIDR )</code></p>
+<h4 id="esempio-3">esempio<a hidden class="anchor" aria-hidden="true" href="#esempio-3">#</a></h4>
+<p>/22</p>
+<p>24 ( è multiplo di 8 maggiore del CIDR ) - 22 = 2</p>
+<p>2 alla 2 = 4</p>
+<h3 id="numero-di-host-da-cidr">numero di host da CIDR<a hidden class="anchor" aria-hidden="true" href="#numero-di-host-da-cidr">#</a></h3>
+<p><code>2 elevato alla (32-numero CIDR)</code></p>
+<h3 id="numero-network--ricorda-che-primo-e-ultimo-host-non-si-possono-usare">numero network ( ricorda che primo e ultimo host non si possono usare)<a hidden class="anchor" aria-hidden="true" href="#numero-network--ricorda-che-primo-e-ultimo-host-non-si-possono-usare">#</a></h3>
+<ol>
+<li>
+<p><strong>vedere  range</strong></p>
+</li>
+<li>
+<p>moltiplicare <strong>numero host per numero affinche arrivo a range</strong> (parte da numero fino numero host * multiplo +1)</p>
+</li>
+</ol>
+<h4 id="esempio-4">esempio<a hidden class="anchor" aria-hidden="true" href="#esempio-4">#</a></h4>
+<p>48.25.24.71/21</p>
+<p>24-21=3 -&gt; 2^3</p>
+<p>le subnet vanno di 8 in 8 partendo da 0 nel terzo ottetto</p>
+<p>dobbiamo raggiungere 24 è fortunatamente 24 è multiplo di 8</p>
+<p>48.25.24.0 è network , 48.25.31.255 è broadcast ( prossimo network parte dal prossimo
+multiplo di 8 32)</p>
+<hr>
+<h3 id="numero-sottereti">numero sottereti<a hidden class="anchor" aria-hidden="true" href="#numero-sottereti">#</a></h3>
+<p><code>2 elevato  alla ( numero CIDR -  numero minore al CIDR multiplo di 8 )</code></p>
+<h4 id="esempio-23">esempio /23<a hidden class="anchor" aria-hidden="true" href="#esempio-23">#</a></h4>
+<p>2 elevato a (23 -16)</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://example.org/">Cyber Noob</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

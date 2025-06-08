@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Cyber Noob</title>
+<meta name="keywords" content="">
+<meta name="description" content="fonti : https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-private-network-dns-server-on-ubuntu-20-04 e 3. Configurations and Zone Files — BIND 9 9.20.9 documentation
+installa bind 9
+sudo apt install bind9 bind9utils bind9-doc
+devi andare nelle cartella /etc/bind
+aprire il file named.conf.options
+e scrivi qualcosa del genere
+options{
+
+forwarders{
+	8.8.8.8;
+	1.1.1.1;
+	}
+};
+configura il file named.conf.local
+
+
+zone &#34;nome.zona&#34; {
+    type primary;
+    file &#34;/etc/bind/zones/db.nome.zona&#34;; # zone file path
+
+};
+creare cartella zones e poi creare il file db.nome.zona
+e in questo file
+$TTL 86400  ; TTL predefinito: 1 giorno (86400 secondi)
+
+@       IN      SOA     ns1.nome.zona. hostmaster.nome.zona. (
+                              2025060701 ; Serial: Numero di serie (AnnoMeseGiornoSequenza)
+                              7200       ; Refresh: 2 ore
+                              3600       ; Retry: 1 ora
+                              604800     ; Expire: 1 settimana
+                              86400 )    ; Negative Cache TTL: 1 giorno
+
+; Record NS (Name Server): Indica chi è il server autorevole per il dominio
+@       IN      NS      ns1.nome.zona.
+
+; Record A (Address): Mappa i nomi agli indirizzi IPv4
+@       IN      A       192.0.2.100    ; Indirizzo IP del dominio base (nome.zona)
+ns1     IN      A       192.0.2.101    ; Indirizzo IP del tuo name server (ns1.nome.zona)
+www     IN      A       192.0.2.100    ; Indirizzo IP per www.nome.zona (stesso del dominio base)
+mail    IN      A       192.0.2.102    ; Indirizzo IP del tuo server di posta (mail.nome.zona)
+
+; Record MX (Mail Exchanger): Specifica il server per la posta elettronica
+@       IN      MX 10   mail.nome.zona. ; Il tuo server di posta, con priorità 10
+ATTENTO A METTERE SEMPRE I PUNTI ALLA FINE">
+<meta name="author" content="">
+<link rel="canonical" href="https://example.org/posts/dns-server-con-bind9/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.6da9a63d25a9608bca2f7f907a030e887a7dd3c3f3918e4cc113129361414bda.css" integrity="sha256-bammPSWpYIvKL3&#43;QegMOiHp908PzkY5MwRMSk2FBS9o=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://example.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://example.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://example.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://example.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://example.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://example.org/posts/dns-server-con-bind9/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://example.org/posts/dns-server-con-bind9/">
+  <meta property="og:site_name" content="Cyber Noob">
+  <meta property="og:title" content="Cyber Noob">
+  <meta property="og:description" content="fonti : https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-private-network-dns-server-on-ubuntu-20-04 e 3. Configurations and Zone Files — BIND 9 9.20.9 documentation
+installa bind 9
+sudo apt install bind9 bind9utils bind9-doc devi andare nelle cartella /etc/bind
+aprire il file named.conf.options e scrivi qualcosa del genere
+options{ forwarders{ 8.8.8.8; 1.1.1.1; } }; configura il file named.conf.local
+zone &#34;nome.zona&#34; { type primary; file &#34;/etc/bind/zones/db.nome.zona&#34;; # zone file path }; creare cartella zones e poi creare il file db.nome.zona e in questo file
+$TTL 86400 ; TTL predefinito: 1 giorno (86400 secondi) @ IN SOA ns1.nome.zona. hostmaster.nome.zona. ( 2025060701 ; Serial: Numero di serie (AnnoMeseGiornoSequenza) 7200 ; Refresh: 2 ore 3600 ; Retry: 1 ora 604800 ; Expire: 1 settimana 86400 ) ; Negative Cache TTL: 1 giorno ; Record NS (Name Server): Indica chi è il server autorevole per il dominio @ IN NS ns1.nome.zona. ; Record A (Address): Mappa i nomi agli indirizzi IPv4 @ IN A 192.0.2.100 ; Indirizzo IP del dominio base (nome.zona) ns1 IN A 192.0.2.101 ; Indirizzo IP del tuo name server (ns1.nome.zona) www IN A 192.0.2.100 ; Indirizzo IP per www.nome.zona (stesso del dominio base) mail IN A 192.0.2.102 ; Indirizzo IP del tuo server di posta (mail.nome.zona) ; Record MX (Mail Exchanger): Specifica il server per la posta elettronica @ IN MX 10 mail.nome.zona. ; Il tuo server di posta, con priorità 10 ATTENTO A METTERE SEMPRE I PUNTI ALLA FINE">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content="fonti : https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-private-network-dns-server-on-ubuntu-20-04 e 3. Configurations and Zone Files — BIND 9 9.20.9 documentation
+installa bind 9
+sudo apt install bind9 bind9utils bind9-doc
+devi andare nelle cartella /etc/bind
+aprire il file named.conf.options
+e scrivi qualcosa del genere
+options{
+
+forwarders{
+	8.8.8.8;
+	1.1.1.1;
+	}
+};
+configura il file named.conf.local
+
+
+zone &#34;nome.zona&#34; {
+    type primary;
+    file &#34;/etc/bind/zones/db.nome.zona&#34;; # zone file path
+
+};
+creare cartella zones e poi creare il file db.nome.zona
+e in questo file
+$TTL 86400  ; TTL predefinito: 1 giorno (86400 secondi)
+
+@       IN      SOA     ns1.nome.zona. hostmaster.nome.zona. (
+                              2025060701 ; Serial: Numero di serie (AnnoMeseGiornoSequenza)
+                              7200       ; Refresh: 2 ore
+                              3600       ; Retry: 1 ora
+                              604800     ; Expire: 1 settimana
+                              86400 )    ; Negative Cache TTL: 1 giorno
+
+; Record NS (Name Server): Indica chi è il server autorevole per il dominio
+@       IN      NS      ns1.nome.zona.
+
+; Record A (Address): Mappa i nomi agli indirizzi IPv4
+@       IN      A       192.0.2.100    ; Indirizzo IP del dominio base (nome.zona)
+ns1     IN      A       192.0.2.101    ; Indirizzo IP del tuo name server (ns1.nome.zona)
+www     IN      A       192.0.2.100    ; Indirizzo IP per www.nome.zona (stesso del dominio base)
+mail    IN      A       192.0.2.102    ; Indirizzo IP del tuo server di posta (mail.nome.zona)
+
+; Record MX (Mail Exchanger): Specifica il server per la posta elettronica
+@       IN      MX 10   mail.nome.zona. ; Il tuo server di posta, con priorità 10
+ATTENTO A METTERE SEMPRE I PUNTI ALLA FINE">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://example.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "",
+      "item": "https://example.org/posts/dns-server-con-bind9/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "name": "",
+  "description": "fonti : https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-private-network-dns-server-on-ubuntu-20-04 e 3. Configurations and Zone Files — BIND 9 9.20.9 documentation\ninstalla bind 9\nsudo apt install bind9 bind9utils bind9-doc devi andare nelle cartella /etc/bind\naprire il file named.conf.options e scrivi qualcosa del genere\noptions{ forwarders{ 8.8.8.8; 1.1.1.1; } }; configura il file named.conf.local\nzone \u0026#34;nome.zona\u0026#34; { type primary; file \u0026#34;/etc/bind/zones/db.nome.zona\u0026#34;; # zone file path }; creare cartella zones e poi creare il file db.nome.zona e in questo file\n$TTL 86400 ; TTL predefinito: 1 giorno (86400 secondi) @ IN SOA ns1.nome.zona. hostmaster.nome.zona. ( 2025060701 ; Serial: Numero di serie (AnnoMeseGiornoSequenza) 7200 ; Refresh: 2 ore 3600 ; Retry: 1 ora 604800 ; Expire: 1 settimana 86400 ) ; Negative Cache TTL: 1 giorno ; Record NS (Name Server): Indica chi è il server autorevole per il dominio @ IN NS ns1.nome.zona. ; Record A (Address): Mappa i nomi agli indirizzi IPv4 @ IN A 192.0.2.100 ; Indirizzo IP del dominio base (nome.zona) ns1 IN A 192.0.2.101 ; Indirizzo IP del tuo name server (ns1.nome.zona) www IN A 192.0.2.100 ; Indirizzo IP per www.nome.zona (stesso del dominio base) mail IN A 192.0.2.102 ; Indirizzo IP del tuo server di posta (mail.nome.zona) ; Record MX (Mail Exchanger): Specifica il server per la posta elettronica @ IN MX 10 mail.nome.zona. ; Il tuo server di posta, con priorità 10 ATTENTO A METTERE SEMPRE I PUNTI ALLA FINE\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "fonti : https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-private-network-dns-server-on-ubuntu-20-04 e 3. Configurations and Zone Files — BIND 9 9.20.9 documentation\ninstalla bind 9\nsudo apt install bind9 bind9utils bind9-doc devi andare nelle cartella /etc/bind\naprire il file named.conf.options e scrivi qualcosa del genere\noptions{ forwarders{ 8.8.8.8; 1.1.1.1; } }; configura il file named.conf.local\nzone \"nome.zona\" { type primary; file \"/etc/bind/zones/db.nome.zona\"; # zone file path }; creare cartella zones e poi creare il file db.nome.zona e in questo file\n$TTL 86400 ; TTL predefinito: 1 giorno (86400 secondi) @ IN SOA ns1.nome.zona. hostmaster.nome.zona. ( 2025060701 ; Serial: Numero di serie (AnnoMeseGiornoSequenza) 7200 ; Refresh: 2 ore 3600 ; Retry: 1 ora 604800 ; Expire: 1 settimana 86400 ) ; Negative Cache TTL: 1 giorno ; Record NS (Name Server): Indica chi è il server autorevole per il dominio @ IN NS ns1.nome.zona. ; Record A (Address): Mappa i nomi agli indirizzi IPv4 @ IN A 192.0.2.100 ; Indirizzo IP del dominio base (nome.zona) ns1 IN A 192.0.2.101 ; Indirizzo IP del tuo name server (ns1.nome.zona) www IN A 192.0.2.100 ; Indirizzo IP per www.nome.zona (stesso del dominio base) mail IN A 192.0.2.102 ; Indirizzo IP del tuo server di posta (mail.nome.zona) ; Record MX (Mail Exchanger): Specifica il server per la posta elettronica @ IN MX 10 mail.nome.zona. ; Il tuo server di posta, con priorità 10 ATTENTO A METTERE SEMPRE I PUNTI ALLA FINE\nSECONDA RIGA @ si riferisce a dominio nome.zona IN SOA {MNAME = nome server principale per zona se creo altri server secondari per zona sempre questo deve stare } {email di gestice}\nTERZA RIGA differenza TERZA RIGA VS SECONDA RIGA terza riga usata dal mondo esterno , seconda riga usata da server secondari scelti da noi per capire chi è il principale in “locale”\nserve dare ip a ns1 se no esterno non sa come collegarci al nostro server\nper restartare bind9 dopo modifica\nsudo systemctl restart bind9 ",
+  "wordCount" : "316",
+  "inLanguage": "en",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://example.org/posts/dns-server-con-bind9/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Cyber Noob",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://example.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://example.org/" accesskey="h" title="Cyber Noob (Alt + H)">Cyber Noob</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://example.org/archives/" title="Archivio">
+                    <span>Archivio</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://example.org/archives" title="archivio">
+                    <span>archivio</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://example.org/categories/" title="categorie">
+                    <span>categorie</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://example.org/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><p>fonti : <a href="https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-private-network-dns-server-on-ubuntu-20-04">https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-private-network-dns-server-on-ubuntu-20-04</a> e <a href="https://bind9.readthedocs.io/en/stable/chapter3.html">3. Configurations and Zone Files — BIND 9 9.20.9 documentation</a></p>
+<p>installa bind 9</p>
+<pre tabindex="0"><code>sudo apt install bind9 bind9utils bind9-doc
+</code></pre><p>devi andare nelle cartella /etc/bind</p>
+<p>aprire il file named.conf.options
+e scrivi qualcosa del genere</p>
+<pre tabindex="0"><code>options{
+
+forwarders{
+	8.8.8.8;
+	1.1.1.1;
+	}
+};
+</code></pre><p>configura il file named.conf.local</p>
+<pre tabindex="0"><code>
+
+zone &#34;nome.zona&#34; {
+    type primary;
+    file &#34;/etc/bind/zones/db.nome.zona&#34;; # zone file path
+
+};
+</code></pre><p>creare cartella zones e poi creare il file db.nome.zona
+e in questo file</p>
+<pre tabindex="0"><code>$TTL 86400  ; TTL predefinito: 1 giorno (86400 secondi)
+
+@       IN      SOA     ns1.nome.zona. hostmaster.nome.zona. (
+                              2025060701 ; Serial: Numero di serie (AnnoMeseGiornoSequenza)
+                              7200       ; Refresh: 2 ore
+                              3600       ; Retry: 1 ora
+                              604800     ; Expire: 1 settimana
+                              86400 )    ; Negative Cache TTL: 1 giorno
+
+; Record NS (Name Server): Indica chi è il server autorevole per il dominio
+@       IN      NS      ns1.nome.zona.
+
+; Record A (Address): Mappa i nomi agli indirizzi IPv4
+@       IN      A       192.0.2.100    ; Indirizzo IP del dominio base (nome.zona)
+ns1     IN      A       192.0.2.101    ; Indirizzo IP del tuo name server (ns1.nome.zona)
+www     IN      A       192.0.2.100    ; Indirizzo IP per www.nome.zona (stesso del dominio base)
+mail    IN      A       192.0.2.102    ; Indirizzo IP del tuo server di posta (mail.nome.zona)
+
+; Record MX (Mail Exchanger): Specifica il server per la posta elettronica
+@       IN      MX 10   mail.nome.zona. ; Il tuo server di posta, con priorità 10
+</code></pre><p>ATTENTO A METTERE SEMPRE I PUNTI ALLA FINE</p>
+<p>SECONDA RIGA
+@ si riferisce a dominio nome.zona
+IN SOA {MNAME = nome server principale per zona se creo altri server secondari per zona sempre questo deve stare } {email di gestice}</p>
+<p>TERZA RIGA
+differenza TERZA RIGA VS SECONDA RIGA
+terza riga usata dal mondo esterno , seconda riga usata da server secondari scelti da noi per capire chi è il principale in &ldquo;locale&rdquo;</p>
+<p>serve dare ip a ns1 se no esterno non sa come collegarci al nostro server</p>
+<p>per restartare bind9 dopo modifica</p>
+<pre tabindex="0"><code>sudo systemctl restart bind9
+</code></pre>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://example.org/">Cyber Noob</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
